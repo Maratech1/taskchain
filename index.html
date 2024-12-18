@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskChain - Your To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            margin: 50px auto;
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        li.completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+        a {
+            color: red;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        a.complete {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TaskChain</h1>
+        <form action="/add" method="POST">
+            <input type="text" name="task" placeholder="Add a new task" required />
+            <button type="submit">Add</button>
+        </form>
+        <ul>
+            {% for index, task in enumerate(tasks) %}
+                <li class="{{ 'completed' if task.completed }}">
+                    {{ task.task }}
+                    <div>
+                        {% if not task.completed %}
+                            <a href="/complete/{{ index }}" class="complete">Complete</a>
+                        {% endif %}
+                        <a href="/delete/{{ index }}">Delete</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
